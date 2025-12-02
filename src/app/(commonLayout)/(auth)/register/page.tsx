@@ -5,39 +5,43 @@ import { Eye, EyeOff, MapPin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
+  // Frontend validation
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    // Full Name validation
     if (!formData.fullName.trim()) {
       newErrors.fullName = "Full name is required";
     } else if (formData.fullName.trim().length < 3) {
       newErrors.fullName = "Full name must be at least 3 characters";
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
@@ -45,14 +49,12 @@ export default function RegisterPage() {
       newErrors.email = "Please enter a valid email address";
     }
 
-    // Password validation
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
 
-    // Confirm Password validation
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = "Please confirm your password";
     } else if (formData.password !== formData.confirmPassword) {
@@ -63,46 +65,37 @@ export default function RegisterPage() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Submit handler
   const handleSubmit = async () => {
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsLoading(true);
 
     try {
-      // Replace with your actual API endpoint
-      const response = await fetch("/api/auth/register", {
+      // Only send fields backend expects
+      const requestBody = {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      };
+
+      const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullName: formData.fullName,
-          email: formData.email,
-          password: formData.password,
-          role: "user", // Default role is always "user"
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        // Handle error from backend
-        if (data.message) {
-          setErrors({ general: data.message });
-        } else {
-          setErrors({ general: "Registration failed. Please try again." });
-        }
+        setErrors({ general: data.message || "Registration failed." });
         return;
       }
 
-      // Success - redirect to login or home
-      console.log("Registration successful:", data);
-      // router.push("/login"); // Uncomment when using next/navigation
       alert("Registration successful! Please login.");
+      router.push("/login");
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error(error);
       setErrors({ general: "Something went wrong. Please try again." });
     } finally {
       setIsLoading(false);
@@ -110,9 +103,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Logo & Title */}
+        {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <MapPin className="w-10 h-10 text-blue-600" />
@@ -123,11 +116,10 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        {/* Register Form */}
+        {/* Form */}
         <div className="bg-white rounded-lg shadow-xl p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Register</h2>
 
-          {/* General Error Message */}
           {errors.general && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
               {errors.general}
@@ -231,7 +223,7 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <Button
               onClick={handleSubmit}
               className="w-full bg-blue-600 hover:bg-blue-700"
@@ -248,23 +240,22 @@ export default function RegisterPage() {
             </Button>
           </div>
 
-          {/* Login Link */}
+          {/* Login link */}
           <p className="text-center text-sm text-gray-600 mt-6">
             Already have an account?{" "}
-            <a
+            <Link
               href="/login"
               className="text-blue-600 hover:text-blue-700 font-semibold"
             >
               Login here
-            </a>
+            </Link>
           </p>
         </div>
 
-        {/* Info Note */}
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-sm text-blue-800">
             <strong>Note:</strong> All new accounts are created with "User"
-            role. Admin access must be granted manually .
+            role. Admin access must be granted manually.
           </p>
         </div>
       </div>
