@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,11 +40,22 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/");
+      login(data.data);
+      // Redirect based on role
+      if (data.data.role === "ADMIN") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/user/explore");
+      }
     } catch (err) {
       setError("Something went wrong");
     }
   };
+  //     router.push("/");
+  //   } catch (err) {
+  //     setError("Something went wrong");
+  //   }
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">

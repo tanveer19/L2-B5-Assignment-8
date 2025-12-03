@@ -11,24 +11,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-
-// Replace this with your actual auth context
-// Example: const { user, logout } = useAuth();
-const MOCK_USER = null; // Try these to test different states:
-// const MOCK_USER = { name: "John Doe", role: "user" };
-// const MOCK_USER = { name: "Admin User", role: "admin" };
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
-  // Replace with your actual auth
-  const user = MOCK_USER;
+  const { user, logout } = useAuth();
+  console.log("Navbar user from context:", user);
 
   const handleLogout = async () => {
-    // Add your logout logic here
-    // await fetch('/api/auth/logout', { method: 'POST' });
-    // router.push('/login');
-    console.log("Logging out...");
+    logout();
   };
 
   // Navigation Links Component - DRY principle
@@ -120,7 +111,7 @@ export default function Navbar() {
                   user.role === "admin" ? "bg-red-500" : "bg-blue-500"
                 } rounded-full flex items-center justify-center text-white font-semibold`}
               >
-                {user.name.charAt(0)}
+                {user.name?.charAt(0)}
               </div>
               <span className="hidden sm:inline">{user.name}</span>
             </Button>
