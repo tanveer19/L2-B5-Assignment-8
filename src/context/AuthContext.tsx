@@ -1,12 +1,18 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface User {
   id: string;
-  name: string;
+  fullName: string;
   email: string;
-  role: "user" | "admin";
+  role: "USER" | "ADMIN";
   token: string;
 }
 
@@ -52,4 +58,3 @@ export const useAuth = () => {
   }
   return context;
 };
-

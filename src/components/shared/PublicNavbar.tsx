@@ -16,80 +16,122 @@ import { useAuth } from "@/context/AuthContext";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
-  console.log("Navbar user from context:", user);
+
+  const closeMenu = () => setIsOpen(false);
 
   const handleLogout = async () => {
-    logout();
+    await logout();
+    closeMenu();
   };
 
-  // Navigation Links Component - DRY principle
-  const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => {
+  // -------------------------------
+  //    NAVIGATION LINKS (Desktop + Mobile)
+  // -------------------------------
+  const renderNavLinks = (isMobile = false) => {
     const linkClass = isMobile
       ? "text-gray-700 hover:text-blue-600"
       : "text-gray-700 hover:text-blue-600 transition";
 
+    // Not Logged In
     if (!user) {
       return (
         <>
-          <Link href="/explore" className={linkClass}>
+          <Link href="/explore" className={linkClass} onClick={closeMenu}>
             Explore Travelers
           </Link>
-          <Link href="/find-buddy" className={linkClass}>
+          <Link href="/find-buddy" className={linkClass} onClick={closeMenu}>
             Find Travel Buddy
           </Link>
         </>
       );
     }
 
-    if (user.role === "admin") {
+    // Admin
+    if (user.role === "ADMIN") {
       return (
         <>
-          <Link href="/admin/dashboard" className={linkClass}>
+          <Link
+            href="/admin/dashboard"
+            className={linkClass}
+            onClick={closeMenu}
+          >
             Admin Dashboard
           </Link>
-          <Link href="/admin/users" className={linkClass}>
+          <Link href="/admin/users" className={linkClass} onClick={closeMenu}>
             Manage Users
           </Link>
-          <Link href="/admin/travel-plans" className={linkClass}>
+          <Link
+            href="/admin/travel-plans"
+            className={linkClass}
+            onClick={closeMenu}
+          >
             Manage Travel Plans
           </Link>
-          {isMobile && (
-            <Link href="/profile" className={linkClass}>
-              Profile
-            </Link>
-          )}
         </>
       );
     }
 
-    // Regular user
+    // Regular User
     return (
       <>
-        <Link href="/explore" className={linkClass}>
+        <Link href="/explore" className={linkClass} onClick={closeMenu}>
           Explore Travelers
         </Link>
-        <Link href="/travel-plans" className={linkClass}>
+        <Link
+          href="user/travel-plans"
+          className={linkClass}
+          onClick={closeMenu}
+        >
           My Travel Plans
         </Link>
-        {isMobile && (
-          <>
-            <Link href="/dashboard" className={linkClass}>
-              Dashboard
-            </Link>
-            <Link href="/profile" className={linkClass}>
-              Profile
-            </Link>
-          </>
-        )}
       </>
     );
   };
 
-  // Auth Buttons Component - DRY principle
-  const AuthButtons = ({ isMobile = false }: { isMobile?: boolean }) => {
-    if (user) {
+  // -------------------------------
+  //          AUTH BUTTONS
+  // -------------------------------
+  const renderAuthButtons = (isMobile = false) => {
+    // Logged Out
+    if (!user) {
       if (isMobile) {
         return (
+          <div className="flex flex-col gap-2 pt-2">
+            <Button variant="outline" asChild className="w-full">
+              <Link href="/login" onClick={closeMenu}>
+                Login
+              </Link>
+            </Button>
+
+            <Button className="w-full bg-blue-600 hover:bg-blue-700" asChild>
+              <Link href="/register" onClick={closeMenu}>
+                Register
+              </Link>
+            </Button>
+          </div>
+        );
+      }
+
+      return (
+        <div className="flex gap-4">
+          <Button variant="outline" asChild>
+            <Link href="/login">Login</Link>
+          </Button>
+          <Button className="bg-blue-600 hover:bg-blue-700" asChild>
+            <Link href="/register">Register</Link>
+          </Button>
+        </div>
+      );
+    }
+
+    // Logged In — Mobile
+    if (isMobile) {
+      return (
+        <>
+          <Link href="/profile" className="text-gray-700" onClick={closeMenu}>
+            Profile
+          </Link>
+
           <Button
             onClick={handleLogout}
             variant="destructive"
@@ -98,73 +140,52 @@ export default function Navbar() {
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>
-        );
-      }
+        </>
+      );
+    }
 
-      // Desktop - User Menu Dropdown
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2">
-              <div
-                className={`w-8 h-8 ${
-                  user.role === "admin" ? "bg-red-500" : "bg-blue-500"
-                } rounded-full flex items-center justify-center text-white font-semibold`}
-              >
-                {user.name?.charAt(0)}
-              </div>
-              <span className="hidden sm:inline">{user.name}</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
+    // Logged In — Desktop (Dropdown)
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="flex items-center gap-2">
+            <div
+              className={`w-8 h-8 ${
+                user.role === "ADMIN" ? "bg-red-500" : "bg-blue-500"
+              } rounded-full flex items-center justify-center text-white font-semibold`}
+            >
+              {user.fullName?.charAt(0)}
+            </div>
+            <span className="hidden sm:inline">{user.fullName}</span>
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuItem asChild>
+            <Link href="/profile" className="w-full cursor-pointer">
+              View Profile
+            </Link>
+          </DropdownMenuItem>
+
+          {user.role === "USER" && (
             <DropdownMenuItem asChild>
-              <Link href="/profile" className="w-full cursor-pointer">
-                View Profile
+              <Link href="/dashboard" className="w-full cursor-pointer">
+                Dashboard
               </Link>
             </DropdownMenuItem>
-            {user.role === "user" && (
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard" className="w-full cursor-pointer">
-                  Dashboard
-                </Link>
-              </DropdownMenuItem>
-            )}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={handleLogout}
-              className="text-red-600 cursor-pointer"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    }
+          )}
 
-    // Not logged in
-    if (isMobile) {
-      return (
-        <div className="flex flex-col gap-2 pt-2">
-          <Button variant="outline" className="w-full" asChild>
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button className="w-full bg-blue-600 hover:bg-blue-700" asChild>
-            <Link href="/register">Register</Link>
-          </Button>
-        </div>
-      );
-    }
+          <DropdownMenuSeparator />
 
-    return (
-      <div className="flex gap-4">
-        <Button variant="outline" asChild>
-          <Link href="/login">Login</Link>
-        </Button>
-        <Button className="bg-blue-600 hover:bg-blue-700" asChild>
-          <Link href="/register">Register</Link>
-        </Button>
-      </div>
+          <DropdownMenuItem
+            onClick={handleLogout}
+            className="text-red-600 cursor-pointer"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Logout
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
   };
 
@@ -173,22 +194,18 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-2xl font-bold text-blue-600"
-            >
-              <MapPin className="w-6 h-6" />
-              TravelBuddy
-            </Link>
-          </div>
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-2xl font-bold text-blue-600"
+          >
+            <MapPin className="w-6 h-6" />
+            TravelBuddy
+          </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop */}
           <div className="hidden md:flex items-center gap-8">
-            <div className="flex gap-6">
-              <NavLinks />
-            </div>
-            <AuthButtons />
+            <div className="flex gap-6">{renderNavLinks()}</div>
+            {renderAuthButtons()}
           </div>
 
           {/* Mobile Toggle */}
@@ -204,10 +221,10 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b shadow-lg overflow-x-hidden">
-          <div className="flex flex-col p-4 gap-4 max-w-full">
-            <NavLinks isMobile />
-            <AuthButtons isMobile />
+        <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b shadow-lg">
+          <div className="flex flex-col p-4 gap-4">
+            {renderNavLinks(true)}
+            {renderAuthButtons(true)}
           </div>
         </div>
       )}
