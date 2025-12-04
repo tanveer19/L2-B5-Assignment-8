@@ -167,14 +167,6 @@ export default function Navbar() {
             </Link>
           </DropdownMenuItem>
 
-          {user.role === "USER" && (
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard" className="w-full cursor-pointer">
-                Dashboard
-              </Link>
-            </DropdownMenuItem>
-          )}
-
           <DropdownMenuSeparator />
 
           <DropdownMenuItem

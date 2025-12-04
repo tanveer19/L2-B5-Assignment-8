@@ -38,9 +38,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    await fetch("http://localhost:5000/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
     localStorage.removeItem("user");
+
+    setUser(null);
   };
 
   return (
