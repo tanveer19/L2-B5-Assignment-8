@@ -15,44 +15,76 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<any>({});
   const [image, setImage] = useState<File | null>(null);
 
+  // raw input strings (fix the comma issue)
+  const [interestsRaw, setInterestsRaw] = useState("");
+  const [visitedRaw, setVisitedRaw] = useState("");
+
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Load profile
   useEffect(() => {
     async function loadProfile() {
       if (!userId) return;
-      const data = await getUserProfile(userId);
-      setProfile(data.data);
+
+      const { data } = await getUserProfile(userId);
+      setProfile(data || {});
+
+      // sync raw text fields
+      setInterestsRaw((data?.interests || []).join(", "));
+      setVisitedRaw((data?.visitedCountries || []).join(", "));
     }
     loadProfile();
   }, [userId]);
 
+  // Submit handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSaving(true);
 
     try {
+      // parse arrays from raw text
+      const interestsArr =
+        interestsRaw
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean) || [];
+      const visitedArr =
+        visitedRaw
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean) || [];
+
       const payload: any = {
         fullName: profile.fullName,
         bio: profile.bio,
         currentLocation: profile.currentLocation,
-        interests: profile.interests?.filter(Boolean) || [],
-        visitedCountries: profile.visitedCountries?.filter(Boolean) || [],
+        interests: interestsArr,
+        visitedCountries: visitedArr,
       };
 
-      // Only upload if image selected
+      // Upload Cloudinary image if selected
       if (image) {
         const uploaded = await uploadImageToCloudinary(image);
         payload.profileImage = uploaded.secure_url;
       }
 
-      const data = await updateUserProfile(userId, payload);
+      const res = await updateUserProfile(userId, payload);
 
-      if (data.success) {
-        setProfile(data.data);
+      if (res.success) {
+        // update profile & raw strings
+        setProfile(res.data);
+        setInterestsRaw((res.data?.interests || []).join(", "));
+        setVisitedRaw((res.data?.visitedCountries || []).join(", "));
+
         toast.success("Profile updated successfully!");
       } else {
-        toast.error(data.message || "Something went wrong!");
+        toast.error(res.message || "Something went wrong");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to update profile!");
+      toast.error("Failed to update profile");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -61,6 +93,7 @@ export default function ProfilePage() {
       <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
+        {/* Full Name */}
         <input
           type="text"
           placeholder="Full Name"
@@ -69,6 +102,7 @@ export default function ProfilePage() {
           className="border p-2 w-full"
         />
 
+        {/* Bio */}
         <textarea
           placeholder="Bio"
           value={profile.bio || ""}
@@ -76,6 +110,7 @@ export default function ProfilePage() {
           className="border p-2 w-full"
         />
 
+        {/* Location */}
         <input
           type="text"
           placeholder="Current Location"
@@ -86,14 +121,16 @@ export default function ProfilePage() {
           className="border p-2 w-full"
         />
 
+        {/* Interests */}
         <input
           type="text"
           placeholder="Interests (comma separated)"
-          value={profile.interests?.join(", ") || ""}
-          onChange={(e) =>
+          value={interestsRaw}
+          onChange={(e) => setInterestsRaw(e.target.value)}
+          onBlur={() =>
             setProfile({
               ...profile,
-              interests: e.target.value
+              interests: interestsRaw
                 .split(",")
                 .map((s) => s.trim())
                 .filter(Boolean),
@@ -102,14 +139,16 @@ export default function ProfilePage() {
           className="border p-2 w-full"
         />
 
+        {/* Visited Countries */}
         <input
           type="text"
           placeholder="Visited Countries (comma separated)"
-          value={profile.visitedCountries?.join(", ") || ""}
-          onChange={(e) =>
+          value={visitedRaw}
+          onChange={(e) => setVisitedRaw(e.target.value)}
+          onBlur={() =>
             setProfile({
               ...profile,
-              visitedCountries: e.target.value
+              visitedCountries: visitedRaw
                 .split(",")
                 .map((s) => s.trim())
                 .filter(Boolean),
@@ -118,12 +157,12 @@ export default function ProfilePage() {
           className="border p-2 w-full"
         />
 
+        {/* Profile Image */}
         <label className="block text-gray-700 font-medium mb-1">
           Profile Image:
         </label>
 
         <div className="flex items-center gap-4">
-          {/* Custom file button */}
           <label
             htmlFor="profileImage"
             className="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded transition"
@@ -131,10 +170,8 @@ export default function ProfilePage() {
             {image ? "Change Image" : "Upload Image"}
           </label>
 
-          {/* Show selected file name */}
           {image && <span className="text-sm text-gray-600">{image.name}</span>}
 
-          {/* Hidden file input */}
           <input
             id="profileImage"
             type="file"
@@ -143,11 +180,15 @@ export default function ProfilePage() {
           />
         </div>
 
+        {/* Button */}
         <button
           type="submit"
-          className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
+          disabled={isSaving}
+          className={`mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition ${
+            isSaving ? "opacity-60 cursor-not-allowed" : ""
+          }`}
         >
-          Save
+          {isSaving ? "Saving..." : "Save"}
         </button>
       </form>
     </div>
