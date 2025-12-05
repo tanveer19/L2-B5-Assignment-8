@@ -128,7 +128,11 @@ export default function Navbar() {
     if (isMobile) {
       return (
         <>
-          <Link href="/profile" className="text-gray-700" onClick={closeMenu}>
+          <Link
+            href="/user/profile"
+            className="text-gray-700"
+            onClick={closeMenu}
+          >
             Profile
           </Link>
 
@@ -162,7 +166,7 @@ export default function Navbar() {
 
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuItem asChild>
-            <Link href="/profile" className="w-full cursor-pointer">
+            <Link href="/user/profile" className="w-full cursor-pointer">
               View Profile
             </Link>
           </DropdownMenuItem>
