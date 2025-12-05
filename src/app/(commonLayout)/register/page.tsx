@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -88,11 +89,12 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setErrors({ general: data.message || "Registration failed." });
+        toast.error(data.message || "Registration failed");
         return;
       }
+      toast.success("Registration successful!");
+      // alert("Registration successful! Please login.");
 
-      alert("Registration successful! Please login.");
       router.push("/login");
     } catch (error) {
       console.error(error);

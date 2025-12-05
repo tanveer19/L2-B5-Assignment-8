@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -36,11 +37,16 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || "Login failed");
+        toast.error(data.message || "Login failed");
         return;
       }
 
+      // Save user in AuthContext
       login(data.data);
+
+      // Success toast
+      toast.success("Login successful!");
+
       // Redirect based on role
       if (data.data.role === "ADMIN") {
         router.push("/admin/dashboard");

@@ -154,11 +154,20 @@ export default function Navbar() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="flex items-center gap-2">
             <div
-              className={`w-8 h-8 ${
-                user.role === "ADMIN" ? "bg-red-500" : "bg-blue-500"
-              } rounded-full flex items-center justify-center text-white font-semibold`}
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold overflow-hidden`}
+              style={{
+                backgroundColor: user.role === "ADMIN" ? "#f87171" : "#3b82f6", // Tailwind red-500 / blue-500
+              }}
             >
-              {user.fullName?.charAt(0)}
+              {user.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                user.fullName?.charAt(0)
+              )}
             </div>
             <span className="hidden sm:inline">{user.fullName}</span>
           </Button>

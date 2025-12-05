@@ -13,6 +13,7 @@ interface User {
   fullName: string;
   email: string;
   role: "USER" | "ADMIN";
+  profileImage?: string;
   token: string;
 }
 

@@ -118,12 +118,34 @@ export default function ProfilePage() {
           className="border p-2 w-full"
         />
 
-        <label>Profile Image:</label>
-        <input type="file" onChange={(e) => setImage(e.target.files![0])} />
+        <label className="block text-gray-700 font-medium mb-1">
+          Profile Image:
+        </label>
+
+        <div className="flex items-center gap-4">
+          {/* Custom file button */}
+          <label
+            htmlFor="profileImage"
+            className="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded transition"
+          >
+            {image ? "Change Image" : "Upload Image"}
+          </label>
+
+          {/* Show selected file name */}
+          {image && <span className="text-sm text-gray-600">{image.name}</span>}
+
+          {/* Hidden file input */}
+          <input
+            id="profileImage"
+            type="file"
+            className="hidden"
+            onChange={(e) => setImage(e.target.files![0])}
+          />
+        </div>
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
         >
           Save
         </button>
