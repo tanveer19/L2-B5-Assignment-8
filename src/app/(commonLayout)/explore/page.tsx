@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 async function getUsers() {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -17,14 +19,14 @@ export default async function ExplorePage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {data?.data?.map((user: any) => (
-          <a
+          <Link
             key={user.id}
             href={`/profile/${user.id}`}
-            className="border p-4 rounded-lg shadow hover:bg-gray-50"
+            className="border p-4 rounded-lg shadow hover:bg-gray-50 block"
           >
             <h2 className="font-bold">{user.fullName}</h2>
             <p className="text-sm text-gray-600">{user.currentLocation}</p>
-          </a>
+          </Link>
         ))}
       </div>
     </div>

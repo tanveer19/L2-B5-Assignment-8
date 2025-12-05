@@ -51,17 +51,12 @@ export default function LoginPage() {
       if (data.data.role === "ADMIN") {
         router.push("/admin/dashboard");
       } else {
-        router.push("/user/explore");
+        router.push("/explore");
       }
     } catch (err) {
       setError("Something went wrong");
     }
   };
-  //     router.push("/");
-  //   } catch (err) {
-  //     setError("Something went wrong");
-  //   }
-  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
