@@ -42,9 +42,6 @@ export default function Navbar() {
           <Link href="/plans" className={linkClass} onClick={closeMenu}>
             Explore Travel Plans
           </Link>
-          <Link href="/find-buddy" className={linkClass} onClick={closeMenu}>
-            Find Travel Buddy
-          </Link>
         </>
       );
     }
@@ -85,9 +82,6 @@ export default function Navbar() {
         </Link>
         <Link href="/user/my-plans" className={linkClass} onClick={closeMenu}>
           My Plans
-        </Link>
-        <Link href="/user/add-plan" className={linkClass} onClick={closeMenu}>
-          Add Plan
         </Link>
       </>
     );

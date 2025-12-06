@@ -51,7 +51,7 @@ export default function LoginPage() {
       if (data.data.role === "ADMIN") {
         router.push("/admin/dashboard");
       } else {
-        router.push("/explore");
+        router.push("/travelers");
       }
     } catch (err) {
       setError("Something went wrong");

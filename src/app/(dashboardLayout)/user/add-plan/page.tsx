@@ -23,25 +23,23 @@ export default function AddTravelPlanPage() {
     setErrMsg("");
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/travel-plans`,
-        {
-          method: "POST",
-          credentials: "include", // send cookies automatically
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            destination,
-            startDate,
-            endDate,
-            budgetMin: Number(budgetMin),
-            budgetMax: Number(budgetMax),
-            travelType,
-            description,
-          }),
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API}/travel-plans`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          destination,
+          startDate,
+          endDate,
+          minBudget: Number(budgetMin) || undefined,
+          maxBudget: Number(budgetMax) || undefined,
+          travelType: travelType.toUpperCase(), // SOLO, FAMILY, FRIENDS
+          description,
+          visibility: "PUBLIC",
+        }),
+      });
 
       if (!res.ok) {
         const error = await res.json();
@@ -50,12 +48,13 @@ export default function AddTravelPlanPage() {
         return;
       }
 
-      router.push("/travel-plans");
+      router.push("/user/my-plans");
       router.refresh();
     } catch (error) {
       setErrMsg("Something went wrong");
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (
