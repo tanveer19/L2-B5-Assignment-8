@@ -36,8 +36,11 @@ export default function Navbar() {
     if (!user) {
       return (
         <>
-          <Link href="/explore" className={linkClass} onClick={closeMenu}>
+          <Link href="/travelers" className={linkClass} onClick={closeMenu}>
             Explore Travelers
+          </Link>
+          <Link href="/plans" className={linkClass} onClick={closeMenu}>
+            Explore Travel Plans
           </Link>
           <Link href="/find-buddy" className={linkClass} onClick={closeMenu}>
             Find Travel Buddy
@@ -74,15 +77,17 @@ export default function Navbar() {
     // Regular User
     return (
       <>
-        <Link href="/explore" className={linkClass} onClick={closeMenu}>
+        <Link href="/travelers" className={linkClass} onClick={closeMenu}>
           Explore Travelers
         </Link>
-        <Link
-          href="user/travel-plans"
-          className={linkClass}
-          onClick={closeMenu}
-        >
-          My Travel Plans
+        <Link href="/plans" className={linkClass} onClick={closeMenu}>
+          Explore Travel Plans
+        </Link>
+        <Link href="/user/my-plans" className={linkClass} onClick={closeMenu}>
+          My Plans
+        </Link>
+        <Link href="/user/add-plan" className={linkClass} onClick={closeMenu}>
+          Add Plan
         </Link>
       </>
     );
