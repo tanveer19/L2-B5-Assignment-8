@@ -1,3 +1,9 @@
+import Search from "@/components/shared/Search";
+
 export default function Home() {
-  return <div className="">content</div>;
+  return (
+    <div className="">
+      <Search />
+    </div>
+  );
 }
