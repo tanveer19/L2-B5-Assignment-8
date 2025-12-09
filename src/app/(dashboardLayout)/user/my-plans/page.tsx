@@ -79,7 +79,7 @@ export default function MyTravelPlansPage() {
 
                 {/* Edit Button */}
                 <Link
-                  href={`/travel-plans/${plan.id}/edit`}
+                  href={`/user/my-plans/${plan.id}/edit`}
                   className="text-blue-600 underline"
                 >
                   Edit
