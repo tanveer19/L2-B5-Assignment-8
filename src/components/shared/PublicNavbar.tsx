@@ -84,6 +84,9 @@ export default function Navbar() {
         <Link href="/user/my-plans" className={linkClass} onClick={closeMenu}>
           My Plans
         </Link>
+        <Link href="/user/reviews" className={linkClass} onClick={closeMenu}>
+          My Reviews
+        </Link>
       </>
     );
   };
