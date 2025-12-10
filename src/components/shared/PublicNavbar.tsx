@@ -179,7 +179,7 @@ export default function Navbar() {
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuItem asChild>
             <Link href="/user/profile" className="w-full cursor-pointer">
-              View Profile
+              Edit Profile
             </Link>
           </DropdownMenuItem>
 
