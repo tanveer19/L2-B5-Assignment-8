@@ -6,7 +6,6 @@ import { Check, Loader2 } from "lucide-react";
 
 export default function PricingPage() {
   const [isLoading, setIsLoading] = useState<string | null>(null);
-  console.log(process.env.NEXT_PUBLIC_API);
   const handleSubscribe = async (plan: "MONTHLY" | "YEARLY") => {
     setIsLoading(plan);
 
