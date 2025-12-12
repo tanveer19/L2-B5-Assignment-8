@@ -8,7 +8,7 @@ export default function PaymentCancelPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-red-50 to-orange-100 p-4">
       <div className="bg-white rounded-2xl shadow-xl p-12 max-w-md w-full text-center">
         <XCircle className="w-20 h-20 text-red-500 mx-auto mb-6" />
         <h1 className="text-3xl font-bold text-gray-900 mb-4">

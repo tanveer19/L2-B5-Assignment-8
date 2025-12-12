@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isVerifying, setIsVerifying] = useState(true);
@@ -14,6 +14,8 @@ export default function PaymentSuccessPage() {
   useEffect(() => {
     if (sessionId) {
       verifySession();
+    } else {
+      setIsVerifying(false);
     }
   }, [sessionId]);
 
@@ -42,7 +44,7 @@ export default function PaymentSuccessPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 to-indigo-100 p-4">
       <div className="bg-white rounded-2xl shadow-xl p-12 max-w-md w-full text-center">
         <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
@@ -60,5 +62,19 @@ export default function PaymentSuccessPage() {
         </Button>
       </div>
     </div>
+  );
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        </div>
+      }
+    >
+      <PaymentSuccessContent />
+    </Suspense>
   );
 }
