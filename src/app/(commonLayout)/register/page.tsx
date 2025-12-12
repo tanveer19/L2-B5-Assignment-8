@@ -80,11 +80,14 @@ export default function RegisterPage() {
         password: formData.password,
       };
 
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API}/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       const data = await response.json();
 
