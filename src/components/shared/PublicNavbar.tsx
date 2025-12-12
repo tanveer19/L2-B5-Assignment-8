@@ -87,6 +87,9 @@ export default function Navbar() {
         <Link href="/user/reviews" className={linkClass} onClick={closeMenu}>
           My Reviews
         </Link>
+        <Link href="/user/pricing" className={linkClass} onClick={closeMenu}>
+          Subscription
+        </Link>
       </>
     );
   };
