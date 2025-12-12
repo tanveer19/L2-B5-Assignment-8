@@ -36,7 +36,7 @@ export default function ReviewForm({
 
   return (
     <div className="p-4 border rounded-lg bg-white shadow">
-      <StarRating rating={rating} onChange={setRating} />
+      <StarRating rating={rating} setRating={setRating} />
 
       <textarea
         className="w-full border rounded p-2 mt-2"
