@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
           Cookie: `accessToken=${accessToken}`,
         },
         body: JSON.stringify(body),
+        credentials: "include",
       }
     );
 
