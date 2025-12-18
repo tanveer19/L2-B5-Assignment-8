@@ -29,12 +29,12 @@ const destinations = [
 
 export default function PopularDestinations() {
   return (
-    <section className="py-12">
+    <section className="py-12 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-8">
         Popular Destinations
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
         {destinations.map((item) => (
           <div
             key={item.name}
