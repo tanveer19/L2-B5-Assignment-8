@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +20,7 @@ export default function Navbar() {
   const closeMenu = () => setIsOpen(false);
 
   const handleLogout = async () => {
-    await logout();
+    logout();
     closeMenu();
   };
 

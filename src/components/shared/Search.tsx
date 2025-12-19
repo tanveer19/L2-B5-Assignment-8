@@ -34,7 +34,9 @@ export default function Search() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Find Your Travel Buddy</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        Find Your Travel Buddy
+      </h1>
 
       <form
         onSubmit={handleSearch}
