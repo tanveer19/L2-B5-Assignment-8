@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative h-[70vh] min-h-[500px] rounded-lg overflow-hidden">
+    <section className="relative h-[70vh] min-h-[500px]  overflow-hidden">
       {/* Background Image */}
       <Image
         src="/mountain0.jpg"
