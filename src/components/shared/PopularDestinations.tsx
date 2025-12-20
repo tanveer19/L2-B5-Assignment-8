@@ -5,65 +5,6 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { destinations } from "@/data/destinations";
 
-// const destinations = [
-//   {
-//     name: "Bali",
-//     country: "Indonesia",
-//     slug: "bali",
-//     image: "/destinations/bali.jpg",
-//     description: "Tropical paradise with beaches & culture",
-//   },
-//   {
-//     name: "Paris",
-//     country: "France",
-//     slug: "paris",
-//     image: "/destinations/paris.jpg",
-//     description: "City of love, art, and history",
-//   },
-//   {
-//     name: "Tokyo",
-//     country: "Japan",
-//     slug: "tokyo",
-//     image: "/destinations/tokyo.jpg",
-//     description: "Tradition meets futuristic city life",
-//   },
-//   {
-//     name: "Dubai",
-//     country: "UAE",
-//     slug: "dubai",
-//     image: "/destinations/dubai.jpg",
-//     description: "Luxury, skyscrapers, and desert adventures",
-//   },
-//   {
-//     name: "Bangkok",
-//     country: "Thailand",
-//     slug: "bangkok",
-//     image: "/destinations/bangkok.jpg",
-//     description: "Street food, temples, and nightlife",
-//   },
-//   {
-//     name: "Sydney",
-//     country: "Australia",
-//     slug: "sydney",
-//     image: "/destinations/sydney.jpg",
-//     description: "Iconic beaches and opera house",
-//   },
-//   {
-//     name: "Cox’s Bazar",
-//     country: "Bangladesh",
-//     slug: "coxs-bazar",
-//     image: "/destinations/coxs-bazar.jpg",
-//     description: "World’s longest natural sea beach",
-//   },
-//   {
-//     name: "Sundarban",
-//     country: "Bangladesh",
-//     slug: "sundarban",
-//     image: "/destinations/sundarban.jpg",
-//     description: "Largest mangrove forest & royal bengal tiger",
-//   },
-// ];
-
 const containerVariants = {
   hidden: {},
   visible: {
@@ -100,7 +41,7 @@ export default function PopularDestinations() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-6"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-10"
       >
         {destinations.map((item) => (
           <motion.div key={item.slug} variants={cardVariants}>

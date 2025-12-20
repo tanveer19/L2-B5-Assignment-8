@@ -24,7 +24,7 @@ export default async function DestinationDetailsPage({ params }: Props) {
           src={destination.image}
           alt={destination.name}
           fill
-          className="object-cover"
+          //   className="object-cover"
           priority
         />
       </div>
