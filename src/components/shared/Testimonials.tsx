@@ -31,7 +31,7 @@ export default function Testimonials() {
         trips!
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
         {testimonials.map((t) => (
           <div
             key={t.name}

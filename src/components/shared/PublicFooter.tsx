@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function PublicFooter() {
   return (
     <footer className="bg-gray-900 text-gray-300 py-12 mt-16">
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Brand */}
         <div>
           <h2 className="text-2xl font-bold text-white mb-3">TravelBuddy</h2>

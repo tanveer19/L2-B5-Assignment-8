@@ -22,13 +22,13 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className=" mx-auto py-16 bg-gray-50">
       <h2 className="text-3xl font-bold text-center mb-4">How It Works</h2>
       <p className="text-center text-gray-600 max-w-xl mx-auto mb-10">
         Start your journey in three easy steps—connect, plan, and explore!
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto px-10">
         {steps.map((step) => (
           <div
             key={step.title}
