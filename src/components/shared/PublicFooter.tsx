@@ -32,11 +32,6 @@ export default function PublicFooter() {
                 Travel Plans
               </Link>
             </li>
-            {/* <li>
-              <Link href="/profile" className="hover:text-white">
-                Profile
-              </Link>
-            </li> */}
           </ul>
         </div>
 
@@ -45,12 +40,12 @@ export default function PublicFooter() {
           <h3 className="text-lg font-semibold text-white mb-3">Support</h3>
           <ul className="space-y-2">
             <li>
-              <Link href="#" className="hover:text-white">
+              <Link href="/about" className="hover:text-white">
                 About Us
               </Link>
             </li>
             <li>
-              <Link href="#" className="hover:text-white">
+              <Link href="/contact" className="hover:text-white">
                 Contact
               </Link>
             </li>
