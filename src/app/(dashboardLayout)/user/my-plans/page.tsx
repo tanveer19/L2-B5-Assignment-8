@@ -78,12 +78,12 @@ export default function MyTravelPlansPage() {
                 <h2 className="text-xl font-semibold">{plan.destination}</h2>
 
                 {/* Edit Button */}
-                {/* <Link
+                <Link
                   href={`/user/my-plans/${plan.id}/edit`}
                   className="text-blue-600 underline"
                 >
                   Edit
-                </Link> */}
+                </Link>
               </div>
 
               <p className="text-sm text-gray-600">

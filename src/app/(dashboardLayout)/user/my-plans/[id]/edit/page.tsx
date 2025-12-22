@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-export default function EditTravelPlanForm({ id }: { id: string }) {
+export default function EditTravelPlanForm() {
   const router = useRouter();
+
+  const params = useParams();
+  const id = params.id as string;
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -29,6 +32,7 @@ export default function EditTravelPlanForm({ id }: { id: string }) {
         `${process.env.NEXT_PUBLIC_API}/travel-plans/${id}`,
         { credentials: "include" }
       );
+      console.log(res);
 
       if (!res.ok) {
         setErrMsg("Failed to load plan");
