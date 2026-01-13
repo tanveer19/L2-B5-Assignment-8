@@ -4,7 +4,7 @@
 
 A modern travel companion matching platform enabling users to create travel plans, find partners, share interests, and connect with other travelers.
 
-🔗 Live URL:
+🔗 Live URL: https://l2-b5-assignment-8.vercel.app
 
 🚀 Features
 🧭 Public Pages
