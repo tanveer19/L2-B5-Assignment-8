@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Menu, X, LogOut, MapPin } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, LogOut, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,7 +15,14 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useAuth();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const closeMenu = () => setIsOpen(false);
 
@@ -29,8 +36,8 @@ export default function Navbar() {
   // -------------------------------
   const renderNavLinks = (isMobile = false) => {
     const linkClass = isMobile
-      ? "text-gray-700 hover:text-blue-600"
-      : "text-gray-700 hover:text-blue-600 transition";
+      ? "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
+      : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors font-medium";
 
     // Not Logged In
     if (!user) {
@@ -102,13 +109,13 @@ export default function Navbar() {
       if (isMobile) {
         return (
           <div className="flex flex-col gap-2 pt-2">
-            <Button variant="outline" asChild className="w-full">
+            <Button variant="outline" asChild className="w-full rounded-xl border-blue-200 hover:border-blue-400 hover:bg-blue-50">
               <Link href="/login" onClick={closeMenu}>
                 Login
               </Link>
             </Button>
 
-            <Button className="w-full bg-blue-600 hover:bg-blue-700" asChild>
+            <Button className="w-full rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-lg shadow-blue-500/25" asChild>
               <Link href="/register" onClick={closeMenu}>
                 Register
               </Link>
@@ -118,11 +125,11 @@ export default function Navbar() {
       }
 
       return (
-        <div className="flex gap-4">
-          <Button variant="outline" asChild>
+        <div className="flex gap-3">
+          <Button variant="outline" asChild className="rounded-xl border-blue-200 hover:border-blue-400 hover:bg-blue-50 dark:border-gray-600 dark:hover:bg-gray-800">
             <Link href="/login">Login</Link>
           </Button>
-          <Button className="bg-blue-600 hover:bg-blue-700" asChild>
+          <Button className="rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/30" asChild>
             <Link href="/register">Register</Link>
           </Button>
         </div>
@@ -200,15 +207,21 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+      scrolled 
+        ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-lg shadow-blue-500/5" 
+        : "bg-white dark:bg-gray-900"
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 text-2xl font-bold text-blue-600"
+            className="flex items-center gap-2 text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent hover:from-blue-500 hover:to-cyan-400 transition-all duration-300"
           >
-            <MapPin className="w-6 h-6" />
+            <div className="p-1.5 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg shadow-blue-500/30">
+              <Plane className="w-5 h-5 text-white" />
+            </div>
             TravelBuddy
           </Link>
 
@@ -221,17 +234,17 @@ export default function Navbar() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="md:hidden p-2 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-6 h-6 text-gray-700 dark:text-gray-200" /> : <Menu className="w-6 h-6 text-gray-700 dark:text-gray-200" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b shadow-lg">
+        <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-blue-100 dark:border-gray-700 shadow-xl shadow-blue-500/10">
           <div className="flex flex-col p-4 gap-4">
             {renderNavLinks(true)}
             {renderAuthButtons(true)}
