@@ -8,7 +8,7 @@ export default function PublicFooter() {
       {/* Bold Top Section with CTA */}
       <div className="relative bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 py-16">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTEwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHptMC0xMGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
-        
+
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="text-center md:text-left">
@@ -22,7 +22,7 @@ export default function PublicFooter() {
                 Join thousands of travelers finding their perfect travel buddies
               </p>
             </div>
-            
+
             <Link
               href="/register"
               className="group px-10 py-5 bg-white text-blue-600 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-white/20 flex items-center gap-3"
@@ -49,16 +49,20 @@ export default function PublicFooter() {
                 </h2>
               </div>
               <p className="text-gray-400 text-lg leading-relaxed mb-6 font-medium">
-                The world's leading platform for connecting travelers. Find your perfect travel companion and turn solo adventures into shared memories.
+                The world's leading platform for connecting travelers. Find your
+                perfect travel companion and turn solo adventures into shared
+                memories.
               </p>
-              
+
               {/* Newsletter */}
               <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
                 <h3 className="text-white font-bold text-lg mb-3 flex items-center gap-2">
                   <Mail className="w-5 h-5 text-cyan-400" />
                   Stay Updated
                 </h3>
-                <p className="text-gray-400 text-sm mb-4">Get travel tips and buddy matches</p>
+                <p className="text-gray-400 text-sm mb-4">
+                  Get travel tips and buddy matches
+                </p>
                 <div className="flex gap-2">
                   <input
                     type="email"
@@ -157,18 +161,35 @@ export default function PublicFooter() {
               <p className="text-gray-500 font-medium">
                 © {new Date().getFullYear()} TravelBuddy. All rights reserved.
               </p>
-              
+
               {/* Social Icons - Bold Style */}
               <div className="flex items-center gap-4">
                 {[
-                  { Icon: FaFacebook, color: "from-blue-600 to-blue-700", label: "Facebook" },
-                  { Icon: FaInstagram, color: "from-pink-600 to-purple-600", label: "Instagram" },
-                  { Icon: FaTwitter, color: "from-cyan-500 to-blue-500", label: "Twitter" },
-                  { Icon: FaLinkedin, color: "from-blue-700 to-blue-800", label: "LinkedIn" },
-                ].map(({ Icon, color, label }) => (
+                  {
+                    Icon: FaLinkedin,
+                    color: "from-blue-700 to-blue-800",
+                    label: "LinkedIn",
+                    url: "https://www.linkedin.com/in/tanveer-hossain-jony/",
+                  },
+
+                  {
+                    Icon: FaTwitter,
+                    color: "from-cyan-500 to-blue-500",
+                    label: "Twitter",
+                    url: "https://x.com/thjbd19",
+                  },
+                  {
+                    Icon: FaFacebook,
+                    color: "from-blue-600 to-blue-700",
+                    label: "Facebook",
+                    url: "https://www.facebook.com/thjbd19",
+                  },
+                ].map(({ Icon, color, label, url }) => (
                   <a
                     key={label}
-                    href="#"
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label={label}
                     className={`p-4 rounded-xl bg-gradient-to-br ${color} hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl`}
                   >
