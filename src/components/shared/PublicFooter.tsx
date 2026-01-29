@@ -112,7 +112,7 @@ export default function PublicFooter() {
                   {[
                     { label: "About Us", href: "/about" },
                     { label: "Contact", href: "/contact" },
-                    { label: "Careers", href: "#" },
+                    { label: "Careers", href: "/careers" },
                     { label: "Blog", href: "#" },
                   ].map((link) => (
                     <li key={link.label}>
