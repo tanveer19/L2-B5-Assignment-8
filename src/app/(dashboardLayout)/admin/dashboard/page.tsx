@@ -212,7 +212,7 @@ export default function AdminDashboardPage() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="grid gap-6 md:grid-cols-3"
+        className="grid gap-6 md:grid-cols-4"
       >
         {/* Total Users Card */}
         <Link href="/admin/users" className="block group">
@@ -274,6 +274,27 @@ export default function AdminDashboardPage() {
             Platform Activity
           </div>
         </motion.div>
+
+        {/* Analytics Card */}
+        <Link href="/admin/analytics" className="block group">
+          <motion.div 
+            variants={item}
+            className="relative overflow-hidden rounded-xl border bg-white p-6 shadow-sm transition-all hover:shadow-md group-hover:border-purple-200"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500">Analytics</p>
+                <h3 className="mt-2 text-lg font-bold text-gray-900">View Reports</h3>
+              </div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-50 text-purple-600 group-hover:scale-110 transition-transform">
+                <Activity className="h-6 w-6" />
+              </div>
+            </div>
+            <div className="mt-4 flex items-center text-sm font-medium text-purple-600 opacity-0 transition-opacity group-hover:opacity-100">
+              View Analytics <ArrowRight className="ml-1 h-4 w-4" />
+            </div>
+          </motion.div>
+        </Link>
       </motion.div>
 
       {/* Recent Activity Sections */}
