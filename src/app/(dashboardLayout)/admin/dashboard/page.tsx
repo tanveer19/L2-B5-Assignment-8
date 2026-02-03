@@ -121,10 +121,60 @@ export default function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex h-[calc(100vh-100px)] items-center justify-center">
-        <div className="flex flex-col items-center gap-2">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-sm text-muted-foreground">Loading dashboard...</p>
+      <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
+        {/* Header Skeleton */}
+        <div className="animate-pulse space-y-2 mb-8">
+          <div className="h-4 w-24 bg-gray-200 rounded" />
+          <div className="h-10 w-48 bg-gray-200 rounded" />
+          <div className="h-4 w-80 bg-gray-200 rounded mt-2" />
+        </div>
+
+        {/* Health Status Skeleton */}
+        <div className="flex gap-3 animate-pulse">
+          <div className="h-8 w-32 bg-gray-200 rounded-full" />
+          <div className="h-8 w-32 bg-gray-200 rounded-full" />
+          <div className="h-8 w-32 bg-gray-200 rounded-full" />
+        </div>
+
+        {/* Stats Grid Skeleton */}
+        <div className="grid gap-6 md:grid-cols-4 animate-pulse">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="rounded-xl border bg-white p-6 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="h-4 w-24 bg-gray-200 rounded mb-2" />
+                  <div className="h-8 w-16 bg-gray-200 rounded" />
+                </div>
+                <div className="h-12 w-12 bg-gray-200 rounded-full" />
+              </div>
+              <div className="mt-4 h-4 w-32 bg-gray-200 rounded" />
+            </div>
+          ))}
+        </div>
+
+        {/* Recent Activity Skeleton */}
+        <div className="grid gap-6 md:grid-cols-2 animate-pulse">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="rounded-xl border bg-white shadow-sm">
+              <div className="p-6 border-b bg-gray-50/50 rounded-t-xl">
+                <div className="h-5 w-40 bg-gray-200 rounded" />
+              </div>
+              <div className="p-0">
+                {Array.from({ length: 5 }).map((_, j) => (
+                  <div key={j} className="p-4 border-b flex items-center justify-between">
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className="h-8 w-8 bg-gray-200 rounded-full" />
+                      <div className="flex-1">
+                        <div className="h-4 w-32 bg-gray-200 rounded mb-1" />
+                        <div className="h-3 w-48 bg-gray-200 rounded" />
+                      </div>
+                    </div>
+                    <div className="h-4 w-20 bg-gray-200 rounded" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     );
