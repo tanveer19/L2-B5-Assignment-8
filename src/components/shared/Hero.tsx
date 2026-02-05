@@ -27,7 +27,7 @@ export default function Hero() {
 
       {/* Airplane Animation - CSS Version */}
       <motion.div
-        initial={{ x: -200, opacity: 0 }}
+        initial={{ x: -400, opacity: 0 }}
         animate={{ x: "100vw", opacity: 1 }}
         transition={{
           duration: 15,
@@ -36,7 +36,7 @@ export default function Hero() {
           ease: "linear",
           delay: 2
         }}
-        className="absolute top-1/4 z-20 w-16 h-16 drop-shadow-lg"
+        className="absolute top-1/4 z-20 w-32 h-32 drop-shadow-lg"
       >
         <div className="relative w-full h-full">
           {/* Airplane SVG */}
@@ -68,7 +68,7 @@ export default function Hero() {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-8 h-1 bg-gradient-to-r from-transparent via-blue-300 to-transparent rounded-full"
+            className="absolute -left-16 top-1/2 transform -translate-y-1/2 w-16 h-2 bg-gradient-to-r from-transparent via-blue-300 to-transparent rounded-full"
           />
         </div>
       </motion.div>
