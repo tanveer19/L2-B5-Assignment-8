@@ -14,13 +14,13 @@
 .swiper-button-next,
 .swiper-button-prev {
   color: white !important;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
+  /* background: rgba(255, 255, 255, 0.1); */
+  /* backdrop-filter: blur(8px); */
   width: 50px !important;
   height: 50px !important;
   border-radius: 50%;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* border: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
 .swiper-button-next:after,
@@ -31,7 +31,7 @@
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  background: rgba(255, 255, 255, 0.2);
+  /* background: rgba(255, 255, 255, 0.2); */
   transform: scale(1.1);
 }
 
